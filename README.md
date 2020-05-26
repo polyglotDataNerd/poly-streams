@@ -6,10 +6,10 @@ This project uses a multithreaded/parallel processing framework to listen and pr
 Dependencies:
 
 * Java 8 
-* [Kinesis Client Library](https://docs.aws.amazon.com/streams/latest/dev/kinesis-record-processor-implementation-app-java.html)
+* [Kafka 2.5](https://kafka.apache.org/22/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html)
 * s3
 * [Maven](https://maven.apache.org/guides/getting-started/maven-in-five-minutes.html)
-* [Terraform v.12](https://learn.hashicorp.com/terraform/getting-started/install.html)
+* [Kafka Docker Images](https://hub.docker.com/r/confluentinc/cp-kafka/)
 
 Consumer
 -
@@ -30,8 +30,8 @@ to generate dependant libraries within the pom.xml file.
 
 Notable Classes:   
      
- 1. [KinConsumer](https://github.com/polyglotDataNerd/poly-streams/blob/master/src/main/java/com/bod/consumer/KinConsumer.java): This object is the entry class to run the pipeline it uses the [ExecutorService](https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ExecutorService.html) interface to maintain thread health. This entry point creates the worker and the worker factories that poll and process from the stream.
- 2. [KinRecordProcess](https://github.com/polyglotDataNerd/poly-streams/blob/master/src/main/java/com/bod/consumer/kcl/KinRecordProcess.java): This object is the processor, it has an internal queue to manage the processing and the polling of data to not maximize resources. 
+ 1. [KFConsumer](src/main/java/com/poly/poc/kafka/KFConsumer.java): This object is the entry class to run the pipeline it uses the [ExecutorService](https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/ExecutorService.html) interface to maintain thread health. This entry point creates the worker and the worker factories that poll and process from the stream.
+ 2. [KFProcessor](src/main/java/com/poly/poc/kafka/KFProcessor.java): This object is the processor, it has an internal queue to manage the processing and the polling of data to not maximize resources. 
 
 **Application Arguments:**
 
