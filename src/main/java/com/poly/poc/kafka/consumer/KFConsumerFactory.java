@@ -6,16 +6,18 @@ import org.apache.kafka.clients.consumer.KafkaConsumer;
 
 import java.time.Duration;
 import java.util.*;
+import java.util.concurrent.ConcurrentLinkedDeque;
 
 public class KFConsumerFactory {
 
-    private List<ConsumerRecord<String, String>> syncinput = Collections.synchronizedList(new ArrayList<>());
-    private KFProcessor processor = new KFProcessor(syncinput);
-    private  KafkaConsumer<String, String> consumer;
-
+    private KafkaConsumer<String, String> consumer;
     public KFConsumerFactory(KafkaConsumer<String, String> consumer) {
         this.consumer = consumer;
     }
+
+    private ConcurrentLinkedDeque<ConsumerRecords<String, String>> consumerQueue = new ConcurrentLinkedDeque<>();
+    private KFProcessor processor = new KFProcessor(consumerQueue);
+
 
     public void consume() {
         /* Consumers will be a single dedicated thread tied to partition(broker) within the topic. Processors wil be
