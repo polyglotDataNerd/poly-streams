@@ -78,7 +78,7 @@ public class KFProcessor {
                                 });
                     });
             /* Manual Offset Control */
-            consumer.commitSync();
+            consumer.commitAsync();
 
         }
 

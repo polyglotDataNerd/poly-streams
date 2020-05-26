@@ -22,8 +22,8 @@ public class ConfigProps {
 
     public String getPropValues(String propName) throws IOException {
         String propfileName = "config.properties";
-        //try (InputStream ins = getClass().getClassLoader().getResourceAsStream(propfileName)) {
-        try (InputStream ins = new FileInputStream(propfileName)) {
+        try (InputStream ins = getClass().getClassLoader().getResourceAsStream(propfileName)) {
+        //try (InputStream ins = new FileInputStream(propfileName)) {
             Properties prop = new Properties();
 
             if (ins != null) {
@@ -44,8 +44,8 @@ public class ConfigProps {
     public void loadLog4jprops() throws IOException {
         String propfileName = "log4j.properties";
         Properties prop = new Properties();
-        //try (InputStream ins = getClass().getClassLoader().getResourceAsStream(propfileName)) {
-        try (InputStream ins = new FileInputStream(propfileName)) {
+        try (InputStream ins = getClass().getClassLoader().getResourceAsStream(propfileName)) {
+        //try (InputStream ins = new FileInputStream(propfileName)) {
             {
                 prop.load(ins);
                 LogManager.resetConfiguration();

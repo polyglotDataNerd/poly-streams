@@ -26,6 +26,7 @@ public class Consumer {
         Properties props = new Properties();
         props.setProperty("boostrap.servers", config.getPropValues("servers"));
         props.setProperty("group.id", config.getPropValues("consumerGroup"));
+        props.setProperty("auto.offset.reset", config.getPropValues("offsetReset"));
         props.setProperty("enable.auto.commit", config.getPropValues("autoCommit"));
         props.setProperty("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
         props.setProperty("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
