@@ -3,11 +3,13 @@ package com.poly.poc.kafka.consumer;
 import com.poly.poc.kafka.consumer.KFConsumerFactory;
 import com.poly.poc.utils.ConfigProps;
 import org.apache.commons.io.FileUtils;
+import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 
 import java.io.File;
 import java.util.Arrays;
 import java.util.Properties;
+import java.util.concurrent.ConcurrentLinkedDeque;
 
 public class Consumer {
 
@@ -30,8 +32,9 @@ public class Consumer {
 
         /* subscribe method subscribes to Kafka topic name */
         KafkaConsumer<String, String> consumer = new KafkaConsumer<>(props);
+        ConcurrentLinkedDeque<ConsumerRecords<String, String>> consumerQueue = new ConcurrentLinkedDeque<>();
         consumer.subscribe(Arrays.asList(config.getPropValues("topics").split(",")));
-        KFConsumerFactory consumerFactory = new KFConsumerFactory(consumer);
+        KFConsumerFactory consumerFactory = new KFConsumerFactory(consumer, consumerQueue);
 
         /* run consumer */
         while (true) {
