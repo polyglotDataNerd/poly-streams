@@ -1,3 +1,5 @@
+package com.poly.poc.kafka.consumer;
+
 import com.poly.poc.kafka.consumer.KFConsumerFactory;
 import com.poly.poc.utils.ConfigProps;
 import org.apache.commons.io.FileUtils;
@@ -7,7 +9,7 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.Properties;
 
-public class Entry {
+public class Consumer {
 
     private static ConfigProps config = new ConfigProps();
 
