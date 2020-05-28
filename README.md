@@ -1,6 +1,6 @@
 # poly-streams
 
-This project uses a multithreaded/parallel processing framework to listen and process event level data from a data stream (Amazon Kinesis) and transform events to be put into the Data Lake. Specifically the stream is only ingesting events used in the Kinesis service. It's generic enough to apply to any Kinesis stream process. 
+This project uses a multithreaded/parallel processing framework to listen and process event level data from a data stream and transform events to be put into a Data Lake. Specifically the stream is only ingesting events used in an Apache Kafka producer. It's generic enough to apply to any Kafka event-stream process. 
 
 
 Dependencies:

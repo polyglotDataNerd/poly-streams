@@ -24,11 +24,11 @@ public class Transformer {
         this.jsonstring = jsonstring;
     }
 
-    public LinkedHashMap<String, String> transform() {
+    public LinkedHashMap<String, String> transformWithHeaders() {
         LinkedHashMap<String, String> jsonCSVSet = new LinkedHashMap<String, String>();
         try {
             ConfigProps config = new ConfigProps();
-            ArrayList<String> headers = new ArrayList<String>(Arrays.asList(config.getPropValues("arrayheadersviper").split(",")));
+            ArrayList<String> headers = new ArrayList<String>(Arrays.asList(config.getPropValues("arrayheaders").split(",")));
             HashMap<String, String> jsonCSV = new HashMap<String, String>();
             JSONParser parser = new JSONParser();
             Object obj = parser.parse(jsonstring);
