@@ -18,14 +18,13 @@ resource "aws_cloudwatch_log_group" "kafka_log_group" {
 
 data aws_subnet "private_subnets" {
   tags = {
-    Name = "test"
+    Environment = var.environment
+    Tier = "Private"
   }
 }
 
 data aws_kms_key "kms"  {
-  tags {
-    Name = "test"
-  }
+    key_id = "arn:aws:kms:us-west-2:111122223333:alias/poly-key-${var.environment}"
 }
 
 /* https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/FilterAndPatternSyntax.html */
