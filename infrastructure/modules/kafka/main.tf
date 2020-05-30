@@ -23,8 +23,8 @@ data aws_subnet "private_subnets" {
   }
 }
 
-data aws_kms_key "kms"  {
-    key_id = "arn:aws:kms:us-west-2:111122223333:alias/poly-key-${var.environment}"
+data aws_kms_key "kms" {
+  key_id = "arn:aws:kms:us-west-2:111122223333:alias/poly-key-${var.environment}"
 }
 
 /* https://docs.aws.amazon.com/AmazonCloudWatch/latest/logs/FilterAndPatternSyntax.html */
@@ -44,8 +44,8 @@ resource "aws_msk_cluster" "msk_poc" {
   kafka_version = "2.2.1"
   number_of_broker_nodes = 3
   broker_node_group_info {
-    client_subnets = flatten([
-      split(",", var.private_subnets[var.environment])])
+    // https://www.terraform.io/docs/configuration/functions/slice.html
+    client_subnets = slice(data.aws_subnet.private_subnets.*.id, 0, 3)
     ebs_volume_size = 1000
     instance_type = "kafka.t3.small"
     security_groups = flatten([
