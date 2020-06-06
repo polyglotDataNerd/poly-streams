@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-cd ~/poly-streams/infrastructure/single-node-kafka/
-docker compose up -d
-cd ~/poly-streams/
+cd ~/solutions/poly-streams/infrastructure/single-node-kafka/
+docker-compose up -d
+cd ~/solutions/poly-streams/
 
 

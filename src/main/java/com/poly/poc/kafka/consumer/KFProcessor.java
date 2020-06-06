@@ -68,8 +68,7 @@ public class KFProcessor {
                     Thread.sleep(5000);
                     processors();
                 } catch (Exception e) {
-                    LOG.warn(String.format("%s%b%s%s", "Processor Interruption Shutdown: ", shutdown, "\t", e));
-                    //LOG.warn(e);
+                    //LOG.warn(String.format("%s%b%s%s", "Processor Interruption Shutdown: ", shutdown, "\t", e));
                 }
             }
         }
@@ -89,7 +88,7 @@ public class KFProcessor {
             List<ConsumerRecord<String, String>> partitionRecords = r.records(partition);
             long lastOffset = partitionRecords.get(partitionRecords.size() - 1).offset();
             long currentOffset = lastOffset + 1;
-            LOG.info("checkpoint partition offset: " + partition + " -> " + currentOffset);
+            //LOG.info("checkpoint partition offset: " + partition + " -> " + currentOffset);
             consumer.commitSync(Collections.singletonMap(partition, new OffsetAndMetadata(currentOffset)));
         }
     }
