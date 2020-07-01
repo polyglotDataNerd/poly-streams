@@ -30,8 +30,8 @@ to generate dependant libraries within the pom.xml file.
 
 Notable Classes:   
      
- 1. [KFConsumerFactory](https://github.com/polyglotDataNerd/poly-streams/blob/master/src/main/java/com/poly/poc/kafka/consumer/KFConsumerFactory.java): Factory class that will run it's own processor. 
- 2. [KFProcessor](https://github.com/polyglotDataNerd/poly-streams/blob/master/src/main/java/com/poly/poc/kafka/consumer/KFProcessor.java): This object is the processor. The KafkaConsumer instance is meant to be single threaded per partition; this processor takes the records within the partition and processes it via an internal dequeue in a multi-threaded pattern. The threads are limited to the ExecutorService which manages the thread pool. 
+ 1. [KFConsumerFactory](./src/main/java/com/poly/poc/kafka/consumer/KFConsumerFactory.java): Factory class that will run it's own processor. 
+ 2. [KFProcessor](./src/main/java/com/poly/poc/kafka/consumer/KFProcessor.java): This object is the processor. The KafkaConsumer instance is meant to be single threaded per partition; this processor takes the records within the partition and processes it via an internal dequeue in a multi-threaded pattern. The threads are limited to the ExecutorService which manages the thread pool. 
 
 **Application Arguments: TODO**
 
@@ -45,7 +45,7 @@ Infrastructure
     
 Docker:
 
-* [Infrastructure](https://github.com/polyglotDataNerd/poly-streams/tree/master/infrastructure/single-node-kafka): To run Kafka 2.5.0 locally to test the consumer you can run docker-compose which will build and run Zookeeper along with Kafka. 
+* [Infrastructure](./infrastructure/single-node-kafka): To run Kafka 2.5.0 locally to test the consumer you can run docker-compose which will build and run Zookeeper along with Kafka. 
 
-   - [Run Docker Build](https://github.com/polyglotDataNerd/poly-streams/blob/master/infrastructure/CreateTopic.sh) 
+   - [Run Docker Build](./infrastructure/CreateTopic.sh) 
  
