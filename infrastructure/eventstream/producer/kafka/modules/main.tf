@@ -31,7 +31,7 @@ data aws_subnet_ids "private_subnets" {
   }
 }
 
-data aws_security_group "msk_sg" {
+data aws_security_group "msk_default_sg" {
   tags = {
     Name = "bd-security-group-${var.environment}"
     Tier = "Default"
@@ -43,7 +43,7 @@ data aws_kms_key "kms" {
 }
 
 # kafka
-resource "aws_security_group" "msk-security-group" {
+resource "aws_security_group" "msk_sg" {
   name = "msk-sg-${var.environment}"
   description = "Kafka security group to allow inbound/outbound from the VPC"
   vpc_id = data.aws_vpc.vpc.id
@@ -90,8 +90,8 @@ resource "aws_security_group" "msk-security-group" {
 
   tags = {
     Environment = var.environment
-    Name = "bd-security-group-${var.environment}"
-    Tier = "Default"
+    Name = "msk-security-group-${var.environment}"
+    Tier = "Streams"
   }
 }
 
@@ -109,17 +109,17 @@ resource "aws_cloudwatch_log_metric_filter" "kafka_error" {
 
 resource "aws_msk_cluster" "msk_poc" {
   cluster_name = "poly-kafka-${var.environment}"
-  kafka_version = "2.2.1"
+  kafka_version = "2.4.1"
   number_of_broker_nodes = 3
   broker_node_group_info {
     // https://www.terraform.io/docs/configuration/functions/slice.html
-    client_subnets = slice(tolist(data.aws_subnet_ids.private_subnets.ids), 0, 3)
+    client_subnets = slice(sort(tolist(data.aws_subnet_ids.private_subnets.ids)), 2, 5)
     ebs_volume_size = 1000
     instance_type = "kafka.t3.small"
     //security_groups = flatten([split(",", var.sg_security_groups[var.environment])])
     security_groups = [
-      data.aws_security_group.msk_sg.name,
-      aws_security_group.msk-security-group.name]
+      data.aws_security_group.msk_default_sg.id,
+      aws_security_group.msk_sg.id]
   }
 
   encryption_info {
@@ -140,13 +140,13 @@ resource "aws_msk_cluster" "msk_poc" {
   }
 }
 
-resource "aws_msk_configuration" "msk_config" {
-  kafka_versions = [
-    "2.2.1"]
-  name = "poly-kafka-${var.environment}"
-
-  server_properties = <<PROPERTIES
-auto.create.topics.enable = true
-delete.topic.enable = true
-PROPERTIES
-}
+//resource "aws_msk_configuration" "msk_config" {
+//  kafka_versions = [
+//    "2.4.1"]
+//  name = "poly-kafka-${var.environment}"
+//
+//  server_properties = <<PROPERTIES
+//auto.create.topics.enable = true
+//delete.topic.enable = true
+//PROPERTIES
+//}

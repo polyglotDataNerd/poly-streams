@@ -8,6 +8,9 @@ GIT_TOKEN=$(aws ssm get-parameters --names /s3/polyglotDataNerd/admin/GitToken -
 CURRENTDATE="$(date  +%Y)"
 #shell parameter for env.
 environment=$1
+MSK_Cluster=poly-kafka-$environment
+MSK_Bootstrap=$(aws kafka get-bootstrap-brokers --cluster-arn $(aws kafka list-clusters --query 'ClusterInfoList[?ClusterName==`"'"$MSK_Cluster"'"`].ClusterArn' --output text) --output text)
+
 
 #copy tfstate files into dir
 aws s3 cp s3://bigdata-utility/terraform/kafka/api/$environment/$CURRENTDATE ~/solutions/poly-streams/infrastructure/eventstream/api/kafka  --recursive --sse --quiet --include "*"
