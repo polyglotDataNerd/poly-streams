@@ -114,7 +114,7 @@ resource "aws_msk_cluster" "msk_poc" {
   broker_node_group_info {
     // https://www.terraform.io/docs/configuration/functions/slice.html
     client_subnets = slice(sort(tolist(data.aws_subnet_ids.private_subnets.ids)), 2, 5)
-    ebs_volume_size = 1000
+    ebs_volume_size = 500
     instance_type = "kafka.t3.small"
     //security_groups = flatten([split(",", var.sg_security_groups[var.environment])])
     security_groups = [
@@ -134,19 +134,28 @@ resource "aws_msk_cluster" "msk_poc" {
       }
     }
   }
+  configuration_info {
+    arn = data.aws_msk_configuration.msk_config.arn
+    revision = 1
+  }
 
   tags = {
     Name = "poly-kafka-${var.environment}"
   }
 }
 
+data aws_msk_configuration "msk_config" {
+  name = "poly-kafka2-${var.environment}"
+}
+
 //resource "aws_msk_configuration" "msk_config" {
 //  kafka_versions = [
 //    "2.4.1"]
-//  name = "poly-kafka-${var.environment}"
+//  name = "poly-kafka2-${var.environment}"
 //
 //  server_properties = <<PROPERTIES
 //auto.create.topics.enable = true
 //delete.topic.enable = true
+//compression.type = zstd
 //PROPERTIES
 //}
